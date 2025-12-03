@@ -357,7 +357,7 @@ Gui.Destroying:Connect(function()
     BlurEffect:Destroy()
 end)
 
-print("AdoptMe UI loaded seamlessly after loader!")
+print("AdoptMe UI loaded!")
 
 -- ANTI-DETECTION (keep this running)
 spawn(function()
