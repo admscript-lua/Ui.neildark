@@ -52,18 +52,30 @@ local v5 = CreateObject("ScreenGui", {
     Parent = game.CoreGui
 });
 
+
+local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
+
 task.spawn(function()
-    while task.wait(0.1) do
+    while task.wait(0.05) do
         pcall(function()
-            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
-            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
-            game.StarterGui:SetCore("TopbarEnabled", false)
-            game.StarterGui:SetCore("DevConsoleVisible", false)
-            game.StarterGui:SetCore("ChatActive", false)
+            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
+            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+            StarterGui:SetCore("TopbarEnabled", false)
+            StarterGui:SetCore("DevConsoleVisible", false)
         end)
     end
 end)
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Escape then
+        task.wait(0.01)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end
+end)
+
 
 
 local v6 = CreateObject("Frame", {
