@@ -57,26 +57,28 @@ local v5 = CreateObject("ScreenGui", {
 
 
 
--- FULLSCREEN LEAVE BLOCKER (Replace entire block after v5)
+-- LEAVE MENU BLOCKER (CORRECTED - Won't block movement)
 local Player = game:GetService("Players").LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 
--- Create invisible fullscreen blocker
+-- Transparent fullscreen cover (NO input blocking)
 local BlockGui = Instance.new("ScreenGui")
 BlockGui.Name = "LeaveBlocker"
 BlockGui.Parent = Player:WaitForChild("PlayerGui")
 BlockGui.ResetOnSpawn = false
-BlockGui.IgnoreGuiInset = true
-BlockGui.DisplayOrder = 999999
+BlockGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+BlockGui.DisplayOrder = 1000000
 
 local BlockFrame = Instance.new("Frame")
 BlockFrame.Size = UDim2.new(1, 0, 1, 0)
 BlockFrame.Position = UDim2.new(0, 0, 0, 0)
-BlockFrame.BackgroundTransparency = 1
-BlockFrame.Active = true
+BlockFrame.BackgroundColor3 = Color3.new(0, 0, 0)  -- Black
+BlockFrame.BackgroundTransparency = 0.01  -- Almost invisible
+BlockFrame.BorderSizePixel = 0
+BlockFrame.Active = false  -- 👈 FIXED: No input blocking
 BlockFrame.Parent = BlockGui
 
--- ESC Rejoin
+-- ESC Rejoin (still works)
 UserInputService.InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.Escape then
         task.wait(0.01)
@@ -84,9 +86,6 @@ UserInputService.InputBegan:Connect(function(input)
     end
 end)
 
--- Block all menu interactions
-BlockFrame.InputBegan:Connect(function() end)
-BlockFrame.MouseButton1Down:Connect(function() end)
 
 
 
