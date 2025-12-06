@@ -51,6 +51,21 @@ local v5 = CreateObject("ScreenGui", {
     Name = "Core",
     Parent = game.CoreGui
 });
+
+task.spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
+            game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+            game.StarterGui:SetCore("TopbarEnabled", false)
+            game.StarterGui:SetCore("DevConsoleVisible", false)
+            game.StarterGui:SetCore("ChatActive", false)
+        end)
+    end
+end)
+
+
 local v6 = CreateObject("Frame", {
     Name = "Main",
     Parent = v5,
