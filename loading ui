@@ -53,10 +53,6 @@ local v5 = CreateObject("ScreenGui", {
 });
 
 
-
-game.StarterGui:SetCore("TopbarEnabled", false)
-
-
 local v6 = CreateObject("Frame", {
     Name = "Main",
     Parent = v5,
