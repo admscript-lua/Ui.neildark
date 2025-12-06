@@ -1,9 +1,9 @@
 shared.LoaderTitle = "Loading Script...";
 shared.LoaderKeyFrames = {
-    [1] = {40, 10},
-    [2] = {60, 30},
-    [3] = {120, 60},
-    [4] = {200, 100}
+    [1] = {7, 10},
+    [2] = {5, 30},
+    [3] = {10, 60},
+    [4] = {12, 100}
 };
 local v2 = {
     LoaderData = {
@@ -13,7 +13,7 @@ local v2 = {
             Topic = Color3.fromRGB(200, 200, 200),
             Title = Color3.fromRGB(255, 255, 255),
             LoaderBackground = Color3.fromRGB(40, 40, 40),
-            LoaderSplash = Color3.fromRGB(135, 206, 235)
+            LoaderSplash = Color3.fromRGB(130, 36, 212)
         }
     },
     Keyframes = shared.LoaderKeyFrames or {
