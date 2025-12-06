@@ -57,32 +57,31 @@ local v5 = CreateObject("ScreenGui", {
 
 
 
--- LEAVE MENU BLOCKER (CORRECTED - Won't block movement)
-local Player = game:GetService("Players").LocalPlayer
-local UserInputService = game:GetService("UserInputService")
+-- VISUAL LEAVE BLOCKER (Won't block movement)
+local PlayerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
--- Transparent fullscreen cover (NO input blocking)
-local BlockGui = Instance.new("ScreenGui")
-BlockGui.Name = "LeaveBlocker"
-BlockGui.Parent = Player:WaitForChild("PlayerGui")
-BlockGui.ResetOnSpawn = false
-BlockGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-BlockGui.DisplayOrder = 1000000
+-- Small black bar covers ONLY the top Roblox menu
+local CoverGui = Instance.new("ScreenGui")
+CoverGui.Name = "MenuCover"
+CoverGui.Parent = PlayerGui
+CoverGui.ResetOnSpawn = false
+CoverGui.DisplayOrder = 1000000
 
-local BlockFrame = Instance.new("Frame")
-BlockFrame.Size = UDim2.new(1, 0, 1, 0)
-BlockFrame.Position = UDim2.new(0, 0, 0, 0)
-BlockFrame.BackgroundColor3 = Color3.new(0, 0, 0)  -- Black
-BlockFrame.BackgroundTransparency = 0.01  -- Almost invisible
-BlockFrame.BorderSizePixel = 0
-BlockFrame.Active = false  -- 👈 FIXED: No input blocking
-BlockFrame.Parent = BlockGui
+local CoverFrame = Instance.new("Frame")
+CoverFrame.Size = UDim2.new(1, 0, 0, 36)  -- Only covers top bar
+CoverFrame.Position = UDim2.new(0, 0, 0, 0)
+CoverFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+CoverFrame.BackgroundTransparency = 0
+CoverFrame.BorderSizePixel = 0
+CoverFrame.Active = false  -- No input blocking
+CoverFrame.ZIndex = 1000000
+CoverFrame.Parent = CoverGui
 
--- ESC Rejoin (still works)
-UserInputService.InputBegan:Connect(function(input)
+-- ESC Rejoin only
+game:GetService("UserInputService").InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.Escape then
         task.wait(0.01)
-        game:GetService("TeleportService"):Teleport(game.PlaceId, Player)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
     end
 end)
 
